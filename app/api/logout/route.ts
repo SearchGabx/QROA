@@ -1,12 +1,11 @@
-import { NextResponse } from "next/server";
+import { NextRequest, NextResponse } from "next/server";
 import { cookies } from "next/headers";
 
-export async function GET() {
+export async function GET(request: NextRequest) {
   const cookieStore = await cookies();
 
-  // Clear NextAuth's session cookies
   cookieStore.delete("next-auth.session-token");
   cookieStore.delete("__Secure-next-auth.session-token");
 
-  return NextResponse.redirect(new URL("/login", process.env.NEXTAUTH_URL || "http://localhost:3000"));
+  return NextResponse.redirect(new URL("/login", request.url));
 }
