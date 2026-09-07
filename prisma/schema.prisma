@@ -1,0 +1,62 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider  = "postgresql"
+  url       = env("DATABASE_URL")   // pooled connection (for regular queries)
+  directUrl = env("DIRECT_URL")     // direct connection (for migrations only)
+}
+
+enum Role {
+  ADMIN
+  STUDENT
+}
+
+enum ScanType {
+  START
+  END
+}
+
+model User {
+  id        String   @id @default(uuid())
+  idNumber  String   @unique
+  password  String
+  name      String   
+  cohort    String?
+  role      Role     @default(STUDENT)
+  createdAt DateTime @default(now())
+
+  scans     Scan[]
+
+  @@map("users")
+}
+
+model Meeting {
+  id        String   @id @default(uuid())
+  name      String
+  date      DateTime @default(now())
+  createdAt DateTime @default(now())
+
+  scans     Scan[]
+
+  @@map("meetings")
+}
+
+model Scan {
+  id        String   @id @default(uuid())
+  type      ScanType
+  timestamp DateTime @default(now())
+
+  userId    String
+  user      User     @relation(fields: [userId], references: [id])
+
+  meetingId String
+  meeting Meeting @relation(fields: [meetingId], references: [id], onDelete: Cascade)
+
+  // Prevents a user from having two scans of the same type
+  // (start or end) in the same meeting
+  @@unique([userId, meetingId, type])
+  @@map("scans")
+}
+
