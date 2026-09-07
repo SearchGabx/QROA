@@ -19,6 +19,11 @@ export default async function AdminDashboard() {
       </div>
       <ul className="space-y-2">
         <li>
+          <Link href="/admin/meetings" className="text-blue-600 underline">
+            Meetings
+          </Link>
+        </li>
+        <li>
           <Link href="/admin/import" className="text-blue-600 underline">
             Import Students
           </Link>
