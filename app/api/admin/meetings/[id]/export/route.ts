@@ -47,8 +47,8 @@ export async function GET(
   ];
 
   for (const s of students) {
-    const start = s.scans.find((sc) => sc.type === "START");
-    const end = s.scans.find((sc) => sc.type === "END");
+    const start = s.scans.find((sc: { type: string }) => sc.type === "START");
+    const end = s.scans.find((sc: { type: string }) => sc.type === "END");
     const count = s.scans.length;
 
     let status = "Absent", missing = "Both";

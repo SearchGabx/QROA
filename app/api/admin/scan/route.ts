@@ -2,7 +2,6 @@ import { NextRequest, NextResponse } from "next/server";
 import { getServerSession } from "next-auth";
 import { authOptions } from "@/lib/auth";
 import { prisma } from "@/lib/prisma";
-import { Prisma } from "@prisma/client";
 
 export async function POST(request: NextRequest) {
   const session = await getServerSession(authOptions);
@@ -52,23 +51,26 @@ export async function POST(request: NextRequest) {
     });
 
     return NextResponse.json({ name: user.name, idNumber: user.idNumber });
-  } catch (err) {
-    if (
-      err instanceof Prisma.PrismaClientKnownRequestError &&
-      err.code === "P2002"
-    ) {
-      return NextResponse.json(
-        {
-          error: `${user.name} already has a ${type} scan for this meeting`,
-          duplicate: true,
-        },
-        { status: 409 }
-      );
-    }
+} catch (err: unknown) {
+  const isDuplicateError =
+    typeof err === "object" &&
+    err !== null &&
+    "code" in err &&
+    (err as { code: unknown }).code === "P2002";
 
+  if (isDuplicateError) {
     return NextResponse.json(
-      { error: "Failed to record scan" },
-      { status: 500 }
+      {
+        error: `${user.name} already has a ${type} scan for this meeting`,
+        duplicate: true,
+      },
+      { status: 409 }
     );
   }
+
+  return NextResponse.json(
+    { error: "Failed to record scan" },
+    { status: 500 }
+  );
+}
 }
