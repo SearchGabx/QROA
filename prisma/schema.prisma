@@ -22,7 +22,8 @@ model User {
   id        String   @id @default(uuid())
   idNumber  String   @unique
   password  String
-  name      String
+  name      String   
+  cohort    String?
   role      Role     @default(STUDENT)
   createdAt DateTime @default(now())
 
