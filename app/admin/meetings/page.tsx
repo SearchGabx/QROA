@@ -15,6 +15,7 @@ export default function MeetingsPage() {
   const [date, setDate] = useState("");
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState<string | null>(null);
+  const [deletingId, setDeletingId] = useState<string | null>(null);
 
   async function loadMeetings() {
     try {
@@ -60,6 +61,34 @@ export default function MeetingsPage() {
       );
     } finally {
       setLoading(false);
+    }
+  }
+
+  async function handleDelete(meetingId: string, meetingName: string) {
+    const confirmed = window.confirm(
+      `Delete "${meetingName}"? This will also delete all its scan records. This cannot be undone.`
+    );
+    if (!confirmed) return;
+
+    setDeletingId(meetingId);
+    try {
+      const res = await fetch(`/api/admin/meetings/${meetingId}`, {
+        method: "DELETE",
+      });
+
+      if (!res.ok) {
+        const data = await res.json().catch(() => ({}));
+        setError(data.error || "Failed to delete meeting");
+        return;
+      }
+
+      setMeetings((prev) => prev.filter((m) => m.id !== meetingId));
+    } catch (err) {
+      setError(
+        err instanceof Error ? err.message : "Something went wrong."
+      );
+    } finally {
+      setDeletingId(null);
     }
   }
 
@@ -115,7 +144,7 @@ export default function MeetingsPage() {
                 {new Date(meeting.date).toLocaleString()}
               </p>
             </div>
-            <div className="flex gap-3 text-sm">
+            <div className="flex gap-3 text-sm items-center">
               <Link
                 href={`/admin/scan?meetingId=${meeting.id}`}
                 className="text-blue-600 underline"
@@ -128,6 +157,13 @@ export default function MeetingsPage() {
               >
                 Report
               </Link>
+              <button
+                onClick={() => handleDelete(meeting.id, meeting.name)}
+                disabled={deletingId === meeting.id}
+                className="text-red-600 underline disabled:opacity-50"
+              >
+                {deletingId === meeting.id ? "Deleting..." : "Delete"}
+              </button>
             </div>
           </li>
         ))}

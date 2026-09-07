@@ -52,7 +52,7 @@ model Scan {
   user      User     @relation(fields: [userId], references: [id])
 
   meetingId String
-  meeting   Meeting  @relation(fields: [meetingId], references: [id])
+  meeting Meeting @relation(fields: [meetingId], references: [id], onDelete: Cascade)
 
   // Prevents a user from having two scans of the same type
   // (start or end) in the same meeting
