@@ -7,5 +7,9 @@ export async function GET(request: NextRequest) {
   cookieStore.delete("next-auth.session-token");
   cookieStore.delete("__Secure-next-auth.session-token");
 
-  return NextResponse.redirect(new URL("/login", request.url));
+  const loginUrl = request.nextUrl.clone();
+  loginUrl.pathname = "/login";
+  loginUrl.search = "";
+
+  return NextResponse.redirect(loginUrl);
 }
