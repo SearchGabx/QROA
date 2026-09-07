@@ -2,6 +2,7 @@ import { getServerSession } from "next-auth";
 import { redirect } from "next/navigation";
 import { authOptions } from "@/lib/auth";
 import Link from "next/link";
+import LogoutButton from "@/components/LogoutButton";
 
 export default async function AdminDashboard() {
   const session = await getServerSession(authOptions);
@@ -12,7 +13,10 @@ export default async function AdminDashboard() {
 
   return (
     <main className="max-w-xl mx-auto p-8">
-      <h1 className="text-2xl font-semibold mb-6">Admin Dashboard</h1>
+      <div className="flex justify-between items-center mb-6">
+        <h1 className="text-2xl font-semibold">Admin Dashboard</h1>
+        <LogoutButton />
+      </div>
       <ul className="space-y-2">
         <li>
           <Link href="/admin/import" className="text-blue-600 underline">
