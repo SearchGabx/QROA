@@ -1,6 +1,7 @@
 "use client";
 
 import { useState } from "react";
+import BackButton from "@/components/Backbutton";
 
 type ImportResult = {
   processed: number;
@@ -46,6 +47,9 @@ export default function ImportStudentsPage() {
 
   return (
     <main className="max-w-xl mx-auto p-8">
+      <div className="mb-4">
+        <BackButton fallbackHref="/admin" />
+      </div>
       <h1 className="text-2xl font-semibold mb-4">Import Students</h1>
       <p className="text-sm text-gray-500 mb-6">
         Upload the .xlsx file with PROM, ID, and NAME columns.

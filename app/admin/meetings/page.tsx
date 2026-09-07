@@ -2,6 +2,7 @@
 
 import { useEffect, useState, FormEvent } from "react";
 import Link from "next/link";
+import BackButton from "@/components/Backbutton";
 
 type Meeting = {
   id: string;
@@ -94,6 +95,9 @@ export default function MeetingsPage() {
 
   return (
     <main className="max-w-xl mx-auto p-8">
+      <div className="mb-4">
+        <BackButton fallbackHref="/admin" />
+      </div>
       <h1 className="text-2xl font-semibold mb-6">Meetings</h1>
 
       <form

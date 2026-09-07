@@ -2,6 +2,7 @@
 
 import { useEffect, useState } from "react";
 import { useParams } from "next/navigation";
+import BackButton from "@/components/Backbutton";
 
 type Summary = { total: number; full: number; partial: number; absent: number };
 
@@ -35,6 +36,9 @@ export default function MeetingReportPage() {
 
   return (
     <div style={{ padding: 24 }}>
+      <div style={{ marginBottom: 16 }}>
+        <BackButton fallbackHref="/admin/meetings" />
+      </div>
       <h1>Meeting Attendance</h1>
       {error && <p style={{ color: "red" }}>{error}</p>}
       {summary ? (

@@ -3,7 +3,7 @@
 import { useEffect, useRef, useState, Suspense } from "react";
 import { useSearchParams } from "next/navigation";
 import { Html5QrcodeScanner } from "html5-qrcode";
-import Link from "next/link";
+import BackButton from "@/components/Backbutton";
 
 type ScanType = "START" | "END";
 
@@ -101,9 +101,7 @@ function ScanPageInner() {
         <p className="text-red-600 mb-4">
           No meeting selected.
         </p>
-        <Link href="/admin/meetings" className="text-blue-600 underline">
-          Go back to Meetings
-        </Link>
+        <BackButton fallbackHref="/admin/meetings" />
       </main>
     );
   }
@@ -112,9 +110,7 @@ function ScanPageInner() {
     <main className="max-w-xl mx-auto p-8">
       <div className="flex justify-between items-center mb-4">
         <h1 className="text-2xl font-semibold">Scan Attendance</h1>
-        <Link href="/admin/meetings" className="text-sm text-blue-600 underline">
-          Back to Meetings
-        </Link>
+        <BackButton fallbackHref="/admin/meetings" />
       </div>
 
       <div className="flex gap-2 mb-4">
