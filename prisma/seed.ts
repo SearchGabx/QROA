@@ -4,14 +4,19 @@ import bcrypt from "bcryptjs";
 const prisma = new PrismaClient();
 
 async function main() {
-  const adminIdNumber = "1042255719";
+  // Change these to whatever you want your admin login to be
+  const adminIdNumber = "admin";
+  const adminPassword = "Opcion2026";
   const adminName = "Admin";
 
-  const hashedPassword = await bcrypt.hash(adminIdNumber, 10);
+  const hashedPassword = await bcrypt.hash(adminPassword, 10);
 
   const admin = await prisma.user.upsert({
     where: { idNumber: adminIdNumber },
-    update: {},
+    update: {
+      password: hashedPassword,
+      name: adminName,
+    },
     create: {
       idNumber: adminIdNumber,
       password: hashedPassword,
