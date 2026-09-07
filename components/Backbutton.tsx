@@ -18,7 +18,7 @@ export default function BackButton({ fallbackHref = "/" }: { fallbackHref?: stri
       onClick={handleBack}
       className="text-sm text-gray-700 border border-gray-400 rounded px-4 py-2 min-h-11 active:bg-gray-100"
     >
-      ← Back
+      Back
     </button>
   );
 }
