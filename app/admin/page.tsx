@@ -13,7 +13,7 @@ export default async function AdminDashboard() {
 
   return (
     <main className="max-w-xl mx-auto p-8">
-      <div className="flex justify-between items-center mb-6">
+      <div className="flex flex-col sm:flex-row sm:justify-between sm:items-center gap-3 mb-6">
         <h1 className="text-2xl font-semibold">Admin Dashboard</h1>
         <LogoutButton />
       </div>
