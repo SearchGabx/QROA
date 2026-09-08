@@ -47,6 +47,7 @@ export async function POST(request: NextRequest) {
         userId: user.id,
         meetingId,
         type,
+        timestamp: new Date(),
       },
     });
 

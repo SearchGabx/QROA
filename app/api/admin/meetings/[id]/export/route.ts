@@ -36,6 +36,13 @@ export async function GET(
 
   const workbook = new ExcelJS.Workbook();
   const sheet = workbook.addWorksheet("Attendance");
+  const formatScanTime = (date: Date) =>
+    date.toLocaleString("es-CO", {
+      timeZone: "America/Bogota",
+      dateStyle: "short",
+      timeStyle: "medium",
+    });
+
   sheet.columns = [
     { header: "ID", key: "id", width: 15 },
     { header: "Name", key: "name", width: 30 },
@@ -59,8 +66,8 @@ export async function GET(
       id: s.idNumber,
       name: s.name,
       cohort: s.cohort ?? "-",
-      start: start ? start.timestamp.toLocaleString() : "-",
-      end: end ? end.timestamp.toLocaleString() : "-",
+      start: start ? formatScanTime(start.timestamp) : "-",
+      end: end ? formatScanTime(end.timestamp) : "-",
       status,
       missing,
     });
