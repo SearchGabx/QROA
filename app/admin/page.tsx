@@ -12,23 +12,25 @@ export default async function AdminDashboard() {
   }
 
   return (
-    <main className="max-w-xl mx-auto p-8">
-      <div className="flex flex-col sm:flex-row sm:justify-between sm:items-center gap-3 mb-6">
-        <h1 className="text-2xl font-semibold">Admin Dashboard</h1>
+    <main className="max-w-xl mx-auto p-8 bg-white min-h-screen">
+      <div className="flex flex-col sm:flex-row sm:justify-between sm:items-center gap-3 mb-8">
+        <h1 className="text-2xl font-bold text-brand">Admin Dashboard</h1>
         <LogoutButton />
       </div>
-      <ul className="space-y-2">
-        <li>
-          <Link href="/admin/meetings" className="text-blue-600 underline">
-            Meetings
-          </Link>
-        </li>
-        <li>
-          <Link href="/admin/import" className="text-blue-600 underline">
-            Import Students
-          </Link>
-        </li>
-      </ul>
+      <div className="space-y-3">
+        <Link
+          href="/admin/meetings"
+          className="block bg-white border border-border-light rounded-2xl px-6 py-4 font-semibold hover:border-brand hover:bg-brand-light shadow-sm"
+        >
+          Meetings
+        </Link>
+        <Link
+          href="/admin/import"
+          className="block bg-white border border-border-light rounded-2xl px-6 py-4 font-semibold hover:border-brand hover:bg-brand-light shadow-sm"
+        >
+          Import Students
+        </Link>
+      </div>
     </main>
   );
 }

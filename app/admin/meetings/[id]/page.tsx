@@ -35,25 +35,53 @@ export default function MeetingReportPage() {
   }, [meetingId]);
 
   return (
-    <div style={{ padding: 24 }}>
-      <div style={{ marginBottom: 16 }}>
+    <main className="max-w-xl mx-auto p-8 bg-white min-h-screen">
+      <div className="mb-6">
         <BackButton fallbackHref="/admin/meetings" />
       </div>
-      <h1>Meeting Attendance</h1>
-      {error && <p style={{ color: "red" }}>{error}</p>}
+
+      <h1 className="text-2xl font-bold text-brand mb-6">
+        Meeting Attendance
+      </h1>
+
+      {error && (
+        <p className="text-brand font-medium mb-4">{error}</p>
+      )}
+
       {summary ? (
-        <div style={{ display: "flex", gap: 16, margin: "16px 0" }}>
-          <div>Total students: {summary.total}</div>
-          <div style={{ color: "green" }}>Full: {summary.full}</div>
-          <div style={{ color: "orange" }}>Partial: {summary.partial}</div>
-          <div style={{ color: "red" }}>Absent: {summary.absent}</div>
+        <div className="grid grid-cols-2 sm:grid-cols-4 gap-3 mb-8">
+          <div className="bg-gray-50 border border-border-light rounded-2xl px-4 py-5 text-center">
+            <p className="text-2xl font-bold">{summary.total}</p>
+            <p className="text-sm text-gray-500 mt-1">Total</p>
+          </div>
+          <div className="bg-green-50 border border-green-100 rounded-2xl px-4 py-5 text-center">
+            <p className="text-2xl font-bold text-green-700">
+              {summary.full}
+            </p>
+            <p className="text-sm text-green-700 mt-1">Full</p>
+          </div>
+          <div className="bg-amber-50 border border-amber-100 rounded-2xl px-4 py-5 text-center">
+            <p className="text-2xl font-bold text-amber-700">
+              {summary.partial}
+            </p>
+            <p className="text-sm text-amber-700 mt-1">Partial</p>
+          </div>
+          <div className="bg-brand-light border border-brand-light rounded-2xl px-4 py-5 text-center">
+            <p className="text-2xl font-bold text-brand">
+              {summary.absent}
+            </p>
+            <p className="text-sm text-brand mt-1">Absent</p>
+          </div>
         </div>
       ) : (
-        <p>Loading...</p>
+        <p className="text-gray-400 mb-8">Loading...</p>
       )}
+
       <a href={`/api/admin/meetings/${meetingId}/export`}>
-        <button>Download Excel Report</button>
+        <button className="w-full bg-brand hover:bg-brand-hover text-white font-semibold py-3 rounded-full shadow-sm">
+          Download Excel Report
+        </button>
       </a>
-    </div>
+    </main>
   );
 }

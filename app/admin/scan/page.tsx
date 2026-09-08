@@ -97,35 +97,37 @@ function ScanPageInner() {
 
   if (!meetingId) {
     return (
-      <main className="max-w-md mx-auto p-8 text-center">
-        <p className="text-red-600 mb-4">
-          No meeting selected.
-        </p>
+      <main className="max-w-md mx-auto p-8 text-center bg-white min-h-screen">
+        <p className="text-brand mb-4 font-medium">No meeting selected.</p>
         <BackButton fallbackHref="/admin/meetings" />
       </main>
     );
   }
 
   return (
-    <main className="max-w-xl mx-auto p-8">
-      <div className="flex justify-between items-center mb-4">
-        <h1 className="text-2xl font-semibold">Scan Attendance</h1>
+    <main className="max-w-xl mx-auto p-8 bg-white min-h-screen">
+      <div className="flex justify-between items-center mb-6">
+        <h1 className="text-2xl font-bold text-brand">Scan Attendance</h1>
         <BackButton fallbackHref="/admin/meetings" />
       </div>
 
-      <div className="flex gap-2 mb-4">
+      <div className="flex bg-gray-100 rounded-full p-1 mb-2 max-w-xs">
         <button
           onClick={() => setScanType("START")}
-          className={`px-4 py-2 rounded ${
-            scanType === "START" ? "bg-black text-white" : "bg-gray-200"
+          className={`flex-1 px-4 py-2.5 rounded-full font-semibold text-sm ${
+            scanType === "START"
+              ? "bg-brand text-white shadow-sm"
+              : "text-gray-500"
           }`}
         >
           Start
         </button>
         <button
           onClick={() => setScanType("END")}
-          className={`px-4 py-2 rounded ${
-            scanType === "END" ? "bg-black text-white" : "bg-gray-200"
+          className={`flex-1 px-4 py-2.5 rounded-full font-semibold text-sm ${
+            scanType === "END"
+              ? "bg-brand text-white shadow-sm"
+              : "text-gray-500"
           }`}
         >
           End
@@ -133,30 +135,33 @@ function ScanPageInner() {
       </div>
 
       <p className="text-sm text-gray-500 mb-4">
-        Currently scanning: <strong>{scanType}</strong>
+        Currently scanning: <strong className="text-brand">{scanType}</strong>
       </p>
 
-      <div id="qr-reader" className="mb-6" />
+      <div
+        id="qr-reader"
+        className="mb-6 rounded-3xl overflow-hidden border border-border-light"
+      />
 
       <div>
-        <h2 className="font-semibold mb-2">Recent scans</h2>
-        <ul className="space-y-1 text-sm">
+        <h2 className="font-semibold mb-3">Recent scans</h2>
+        <ul className="space-y-2 text-sm">
           {log.map((entry, i) => (
             <li
               key={i}
-              className={
+              className={`rounded-2xl px-4 py-3 font-medium ${
                 entry.status === "success"
-                  ? "text-green-600"
+                  ? "bg-green-50 text-green-700"
                   : entry.status === "duplicate"
-                  ? "text-amber-600"
-                  : "text-red-600"
-              }
+                  ? "bg-amber-50 text-amber-700"
+                  : "bg-brand-light text-brand"
+              }`}
             >
               {entry.idNumber} — {entry.message}
             </li>
           ))}
           {log.length === 0 && (
-            <li className="text-gray-400">No scans yet.</li>
+            <li className="text-gray-400 px-1">No scans yet.</li>
           )}
         </ul>
       </div>
@@ -166,7 +171,7 @@ function ScanPageInner() {
 
 export default function ScanPage() {
   return (
-    <Suspense fallback={<p className="p-8">Loading...</p>}>
+    <Suspense fallback={<p className="p-8 bg-white min-h-screen">Loading...</p>}>
       <ScanPageInner />
     </Suspense>
   );

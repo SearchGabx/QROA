@@ -14,31 +14,39 @@ export default async function MyQrPage() {
   const qrDataUrl = await QRCode.toDataURL(session.user.idNumber, {
     width: 320,
     margin: 2,
+    color: {
+      dark: "#1f1f1f",
+      light: "#ffffff",
+    },
   });
 
   return (
-    <main className="max-w-md mx-auto p-8 text-center">
-      <div className="flex justify-end mb-2">
+    <main className="max-w-md mx-auto p-8 text-center bg-white min-h-screen">
+      <div className="flex justify-end mb-4">
         <LogoutButton />
       </div>
-      <h1 className="text-2xl font-semibold mb-2">My QR Code</h1>
-      <p className="text-gray-500 mb-6">{session.user.name}</p>
+
+      <h1 className="text-2xl font-bold text-brand mb-1">My QR Code</h1>
+      <p className="text-gray-500 mb-8">{session.user.name}</p>
 
       <div className="flex justify-center">
-        {/* eslint-disable-next-line @next/next/no-img-element */}
-        <img
-          src={qrDataUrl}
-          alt="Your attendance QR code"
-          className="border rounded-lg"
-          width={320}
-          height={320}
-        />
+        <div className="bg-white border border-border-light rounded-3xl p-6 shadow-sm inline-block">
+          {/* eslint-disable-next-line @next/next/no-img-element */}
+          <img
+            src={qrDataUrl}
+            alt="Your attendance QR code"
+            className="rounded-xl"
+            width={320}
+            height={320}
+          />
+        </div>
       </div>
 
-      <p className="mt-6 text-sm text-gray-400">
+      <div className="mt-6 inline-block bg-brand-light text-brand font-semibold px-5 py-2 rounded-full text-sm">
         ID: {session.user.idNumber}
-      </p>
-      <p className="mt-2 text-xs text-gray-400">
+      </div>
+
+      <p className="mt-4 text-sm text-gray-400">
         Show this code to the admin at the start and end of each meeting.
       </p>
     </main>

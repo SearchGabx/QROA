@@ -94,79 +94,81 @@ export default function MeetingsPage() {
   }
 
   return (
-    <main className="max-w-xl mx-auto p-8">
+    <main className="max-w-xl mx-auto p-8 bg-white min-h-screen">
       <div className="mb-4">
         <BackButton fallbackHref="/admin" />
       </div>
-      <h1 className="text-2xl font-semibold mb-6">Meetings</h1>
+      <h1 className="text-2xl font-bold text-brand mb-6">Meetings</h1>
 
       <form
         onSubmit={handleCreate}
-        className="space-y-3 mb-8 border rounded p-4"
+        className="space-y-4 mb-8 bg-white border border-border-light rounded-3xl p-6 shadow-sm"
       >
         <div>
-          <label className="block text-sm mb-1">Meeting name</label>
+          <label className="block text-sm font-medium mb-1.5">
+            Meeting name
+          </label>
           <input
             type="text"
             value={name}
             onChange={(e) => setName(e.target.value)}
-            className="w-full border rounded px-3 py-2"
+            className="w-full border border-border-light rounded-full px-5 py-3 outline-none focus:border-brand focus:ring-2 focus:ring-brand-light"
             placeholder="e.g. Week 3 Class"
             required
           />
         </div>
         <div>
-          <label className="block text-sm mb-1">
+          <label className="block text-sm font-medium mb-1.5">
             Date (optional, defaults to now)
           </label>
           <input
             type="datetime-local"
             value={date}
             onChange={(e) => setDate(e.target.value)}
-            className="w-full border rounded px-3 py-2"
+            className="w-full border border-border-light rounded-full px-5 py-3 outline-none focus:border-brand focus:ring-2 focus:ring-brand-light"
           />
         </div>
-        {error && <p className="text-red-600 text-sm">{error}</p>}
+        {error && <p className="text-brand text-sm font-medium">{error}</p>}
         <button
           type="submit"
           disabled={loading}
-          className="bg-black text-white px-4 py-2 rounded disabled:opacity-50"
+          className="bg-brand hover:bg-brand-hover text-white font-semibold px-6 py-3 rounded-full disabled:opacity-50 shadow-sm"
         >
           {loading ? "Creating..." : "Create Meeting"}
         </button>
       </form>
 
-      <ul className="space-y-2">
+      <ul className="space-y-3">
         {meetings.map((meeting) => (
           <li
             key={meeting.id}
-            className="border rounded p-3 flex justify-between items-center"
+            className="bg-white border border-border-light rounded-2xl p-4 flex justify-between items-center shadow-sm"
           >
             <div>
-              <p className="font-medium">{meeting.name}</p>
+              <p className="font-semibold">{meeting.name}</p>
               <p className="text-sm text-gray-500">
                 {new Date(meeting.date).toLocaleString()}
               </p>
             </div>
-            <div className="flex gap-3 text-sm items-center">
+            <div className="flex gap-2 text-sm items-center">
               <Link
                 href={`/admin/scan?meetingId=${meeting.id}`}
-                className="text-blue-600 underline"
+                className="bg-brand-light text-brand font-medium px-4 py-2 rounded-full hover:bg-brand hover:text-white"
               >
                 Scan
               </Link>
               <Link
                 href={`/admin/meetings/${meeting.id}`}
-                className="text-blue-600 underline"
+                className="bg-gray-100 text-gray-700 font-medium px-4 py-2 rounded-full hover:bg-gray-200"
               >
                 Report
               </Link>
               <button
                 onClick={() => handleDelete(meeting.id, meeting.name)}
                 disabled={deletingId === meeting.id}
-                className="text-red-600 underline disabled:opacity-50"
+                className="text-gray-400 hover:text-brand font-medium px-2 disabled:opacity-50"
               >
-                {deletingId === meeting.id ? "Deleting..." : "Delete"}
+                {deletingId === meeting.id ? "..." : "Delete"}
               </button>
             </div>
           </li>
