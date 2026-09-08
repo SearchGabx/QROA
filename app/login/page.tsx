@@ -2,6 +2,7 @@
 
 import { useState, FormEvent } from "react";
 import { signIn } from "next-auth/react";
+import Image from "next/image";
 
 export default function LoginPage() {
   const [idNumber, setIdNumber] = useState("");
@@ -35,8 +36,20 @@ export default function LoginPage() {
         onSubmit={handleSubmit}
         className="w-full max-w-sm bg-white border border-border-light rounded-3xl p-8 space-y-5 shadow-sm"
       >
+        <div className="flex justify-center mb-2">
+          <Image
+                src="/OA_LOGO.png"
+                alt="Opcion Atlantico"
+                width={140}
+                height={140}
+                className="object-contain"
+/>
+        </div>
+
         <div className="text-center mb-2">
-          <h1 className="text-2xl font-bold text-brand">Log In</h1>
+          <h1 className="text-2xl font-bold text-brand">
+            Attendance Opcion Atlantico
+          </h1>
           <p className="text-sm text-gray-500 mt-1">
             Enter your ID number to continue
           </p>
